@@ -3,5 +3,3 @@
 __pycache__
 app.log
 alembic/versions
-.env
-keycloak.env

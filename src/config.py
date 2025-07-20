@@ -16,9 +16,6 @@ class Config(BaseSettings):
         POSTGRES_DB: Имя базы данных
         POSTGRES_USER: Пользователь БД
         POSTGRES_PASSWORD: Пароль пользователя БД
-        SECRET_KEY: Секретный ключ для JWT
-        ALGORITHM: Алгоритм шифрования JWT
-        ACCESS_TOKEN_EXPIRE: Время жизни access токена (в минутах)
         TITLE: Имя проекта
         VERSION: Версия проекта
         DESCRIPTION: Описание проекта (можно использовать синтаксис .md файлов):
@@ -42,11 +39,6 @@ class Config(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
-
-    # Настройки аутентификации
-    SECRET_KEY: str
-    ALGORITHM: str
-    ACCESS_TOKEN_EXPIRE: int
 
     # Настройка приложения
     TITLE: str = 'FastAPI'
