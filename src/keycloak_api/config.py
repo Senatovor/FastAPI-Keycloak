@@ -21,7 +21,7 @@ class ConfigKeycloak(BaseSettings):
         REALM: Название realm в Keycloak.
         CLIENT_ID: Идентификатор клиента в Keycloak.
         KEYCLOAK_EXTERNAL_URL: Внешний URL Keycloak.
-        PUBLIC_KEY: Публичный ключ Keycloak.
+        PUBLIC_KEY_KEYCLOAK: Публичный ключ Keycloak.
 
         database_url: Формирует URL для подключения к PostgreSQL.
         token_url: URL для получения токенов.
@@ -47,7 +47,7 @@ class ConfigKeycloak(BaseSettings):
     REALM: str | None = None
     CLIENT_ID: str | None = None
     KEYCLOAK_EXTERNAL_URL: str
-    PUBLIC_KEY: str | None = None
+    PUBLIC_KEY_KEYCLOAK: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=Path(__file__).parent.parent.parent / ".env.keycloak",

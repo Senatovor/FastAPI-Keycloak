@@ -11,7 +11,7 @@ def get_public_key() -> str:
     """
     return (
         f"-----BEGIN PUBLIC KEY-----\n"
-        f"{config_keycloak.PUBLIC_KEY}"
+        f"{config_keycloak.PUBLIC_KEY_KEYCLOAK}"
         f"\n-----END PUBLIC KEY-----"
     )
 
