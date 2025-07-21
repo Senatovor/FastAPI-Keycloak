@@ -79,8 +79,38 @@ async def get_server_user(
         raise NotAccessToken
 
     try:
-        user_info = await keycloak_client.get_user_info(token=token)
+        user_info = await keycloak_client.get_user_info(token)
         return user_info
+    except Exception as e:
+        logger.error(f'Проблема токена: {e}')
+        raise InvalidToken
+
+
+async def is_realm_admin_user(
+    token: str = Depends(get_token_from_cookie),
+    keycloak_client: KeycloakClient = Depends(get_keycloak_client),
+) -> bool:
+    """Проверяет, есть ли у пользователя роль администратора.
+
+    Args:
+        token (str): Access token пользователя.
+        keycloak_client (KeycloakClient): Клиент Keycloak.
+
+    Returns:
+        bool: True, если у пользователя есть роль администратора, иначе False.
+
+    Raises:
+        NotAccessToken(401): Если токен отсутствует.
+        InvalidToken(401): Если токен недействителен или запрос к Keycloak не удался.
+    """
+    if not token:
+        raise NotAccessToken
+
+    try:
+        user_info = await keycloak_client.get_user_info(token)
+        logger.info(f'Пользователь f{user_info["sub"]}, пытается получить доступ')
+        is_admin = await keycloak_client.check_user_admin_role(token, user_info["sub"])
+        return is_admin
     except Exception as e:
         logger.error(f'Проблема токена: {e}')
         raise InvalidToken

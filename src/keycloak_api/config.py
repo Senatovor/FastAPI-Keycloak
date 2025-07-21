@@ -101,6 +101,17 @@ class ConfigKeycloak(BaseSettings):
             f"&redirect_uri={self.redirect_uri}"
         )
 
+    def get_user_roles_url(self, user_id: int) -> str:
+        """Возвращает URL для получения ролей пользователя в Keycloak.
+
+        Args:
+            user_id (str): ID пользователя в Keycloak (не username!).
+
+        Returns:
+            str: Полный URL для запроса ролей пользователя.
+        """
+        return f"{self.KEYCLOAK_BASE_URL}/admin/realms/{self.REALM}/users/{user_id}/role-mappings"
+
 
 try:
     config_keycloak = ConfigKeycloak()

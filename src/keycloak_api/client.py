@@ -87,3 +87,42 @@ class KeycloakClient:
         except httpx.RequestError as e:
             logger.error(f'Ошибка при запросе к keycloak: {str(e)}')
             raise KeycloakRequestError
+
+    async def check_user_admin_role(self, token: str, user_id: int) -> bool:
+        """Проверяет, есть ли у пользователя роль администратора.
+
+        Args:
+            token (str): Access token пользователя.
+            user_id (int): id пользователя
+
+        Returns:
+            bool: True, если у пользователя есть роль администратора, иначе False.
+
+        Raises:
+            InvalidToken: Если токен недействителен.
+            KeycloakRequestError: Если произошла ошибка запроса.
+        """
+        headers = {"Authorization": f"Bearer {token}"}
+
+        try:
+            response = await self.client.get(
+                config_keycloak.get_user_roles_url(user_id),
+                headers=headers
+            )
+
+            admin_roles = ['realm-admin']
+
+            if response.status_code != 200:
+                logger.error(f"Ошибка при получении ролей: {response.text}")
+                return False
+
+            roles = response.json()
+            client_roles = []
+            for client_data in roles.get('clientMappings', {}).values():
+                client_roles.extend(role['name'] for role in client_data.get('mappings', []))
+
+            return any(role in admin_roles for role in client_roles)
+
+        except httpx.RequestError as e:
+            logger.error(f'Ошибка при запросе к Keycloak: {str(e)}')
+            raise KeycloakRequestError

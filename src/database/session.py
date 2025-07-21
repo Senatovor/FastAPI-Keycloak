@@ -11,15 +11,10 @@ from src.keycloak_api.config import config_keycloak
 SQL_DATABASE_URL = config.database_url
 SQL_DATABASE_KEYCLOAK_URL = config_keycloak.database_url
 
-engine_app_db = create_async_engine(url=SQL_DATABASE_URL)
-engine_keycloak_db = create_async_engine(url=SQL_DATABASE_KEYCLOAK_URL)
+engine = create_async_engine(url=SQL_DATABASE_URL)
 
 session_factory = async_sessionmaker(
-    engine_app_db,
-    expire_on_commit=False
-)
-session_factory_keycloak = async_sessionmaker(
-    engine_keycloak_db,
+    engine,
     expire_on_commit=False
 )
 
@@ -94,11 +89,9 @@ class DatabaseSessionManager:
 
 # Глобальный экземпляр менеджера сессий
 session_manager = DatabaseSessionManager(session_factory)
-session_keycloak_manager = DatabaseSessionManager(session_factory_keycloak)
 
 # Стандартная зависимость для FastAPI
 SessionDepends = session_manager.session_dependency
-SessionKeycloakDepends = session_keycloak_manager.session_dependency
 
 # Пример использования зависимости для FastAPI
 #

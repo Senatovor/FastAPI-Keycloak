@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
-from src.keycloak_api.dependencies import get_cookie_user
+from src.keycloak_api.dependencies import get_cookie_user, get_server_user
 from src.keycloak_api.config import config_keycloak
 from src.config import templates
 
@@ -15,6 +15,6 @@ async def index():
 
 @router.get("/protected")
 async def protected_page(
-        user: dict = Depends(get_cookie_user)
+        user: dict = Depends(get_server_user)
 ):
     return user
