@@ -41,13 +41,13 @@ class ConfigKeycloak(BaseSettings):
     POSTGRES_PASSWORD: str
 
     # Настройки keycloak
-    CLIENT_SECRET: str
+    CLIENT_SECRET: str | None = None
     BASE_URL: str
     KEYCLOAK_BASE_URL: str
-    REALM: str
-    CLIENT_ID: str
+    REALM: str | None = None
+    CLIENT_ID: str | None = None
     KEYCLOAK_EXTERNAL_URL: str
-    PUBLIC_KEY: str
+    PUBLIC_KEY: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=Path(__file__).parent.parent.parent / ".env.keycloak",
