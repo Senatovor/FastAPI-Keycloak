@@ -14,8 +14,8 @@
 5. ```alembic revision --autogenerate -m "create  user"```
 6. ```alembic upgrade head```
 7. ```exit```
-8. Переходите в контейнер keycloak, создаете новый realm
+8. Переходите в контейнер keycloak, создаете новый realm и client
 9. Заполняете до конца .env.keycloak  
 
-P.S: CLIENT_SECRET, REALM, CLIENT_ID найдете в разделе вашего нового realm,  
+P.S: CLIENT_SECRET, REALM, CLIENT_ID найдете в разделе вашего нового realm и client,  
 PUBLIC_KEY_KEYCLOAK(он же PUBLIC_KEY) найдете в разделе realm settings -> keys -> rsa256 public key
