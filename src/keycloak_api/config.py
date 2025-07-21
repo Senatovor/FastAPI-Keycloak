@@ -31,6 +31,7 @@ class ConfigKeycloak(BaseSettings):
         userinfo_url: URL для получения информации о пользователе.
         redirect_uri: URL для перенаправления после аутентификации.
         keycloak_url: Полный URL для аутентификации в Keycloak.
+        get_user_roles_url: Возвращает URL для получения ролей пользователя в Keycloak.
     """
     # Настройки базы данных
     DB_HOST: str
